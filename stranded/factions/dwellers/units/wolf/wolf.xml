@@ -1,0 +1,138 @@
+<?xml version="1.0" standalone="no"?>
+
+<unit>
+	<parameters>
+		<size value="1"/>
+		<height value="2"/>
+		<max-hp value="500" regeneration="1"/>
+		<max-ep value="0"/>
+		<armor value="40"/>	
+		<armor-type value="organic"/>
+		<sight value="12"/>
+		<time value="10"/>	
+		<multi-selection value="true"/>	
+		<cellmap value="false"/>
+		<levels/>
+		<fields>
+			<field value="land"/>
+		</fields>	
+		<properties/>
+		<light enabled="false"/>
+		<unit-requirements/>
+		<upgrade-requirements/>
+		<resource-requirements>
+		</resource-requirements>
+		<resources-stored/>
+		<image path="images/daemon.bmp"/>
+		<image-cancel path="../tech_cancel.bmp"/>
+		<meeting-point value="false"/>
+		<selection-sounds enabled="true">
+			<sound path="sounds/selack1.ogg"/>
+			<sound path="sounds/selack2.ogg"/>
+		</selection-sounds>
+		<command-sounds enabled="true">
+			<sound path="sounds/selack1.ogg"/>
+			<sound path="sounds/selack2.ogg"/>
+		</command-sounds>
+
+	</parameters>
+
+	<skills>
+	
+		<skill>
+			<type value="stop"/>
+			<name value="stop_skill"/>		
+			<ep-cost value="0"/>
+			<speed value="1000"/>
+			<anim-speed value="40"/>
+			<animation path="models/wolf_stand1.g3d"/>
+			<animation path="models/wolf_stand2.g3d"/>
+			<animation path="models/wolf_stand3.g3d"/>
+			<animation path="models/wolf_stand4.g3d"/>
+			<sound enabled="false"/>
+		</skill>
+		
+		<skill>
+			<type value="move"/>
+			<name value="move_skill"/>		
+			<ep-cost value="0"/>
+			<speed value="300"/>
+			<anim-speed value="150"/>
+			<animation path="models/wolf.g3d"/>
+			<sound enabled="false"/>
+		</skill>
+
+		<skill>
+			<type value="attack"/>
+			<name value="attack_skill"/>		
+			<ep-cost value="0"/>
+			<speed value="70"/>
+			<anim-speed value="80"/>
+			<animation path="models/wolf_attack.g3d"/>
+			<sound enabled="true" start-time="0.0">
+				<sound-file path="sounds/a1.ogg"/>
+				<sound-file path="sounds/a2.ogg"/>
+				<!--sound-file path="sounds/a1.ogg"/>
+				<sound-file path="sounds/a2.ogg"/>
+				<sound-file path="sounds/a3.ogg"/-->
+			</sound> 
+			<attack-strenght value="35"/>
+			<attack-var value="30"/>
+			<attack-range value="1"/>
+			<attack-type value="slashing"/>
+			<attack-fields>
+				<field value="land"/>
+			</attack-fields>
+			<attack-start-time value="0.3"/>
+			<projectile value="false"/>
+			<splash value="false"/>
+		</skill>
+	
+		<skill>
+			<type value="die"/>
+			<name value="die_skill"/>		
+			<ep-cost value="0"/>
+			<speed value="120"/>
+			<anim-speed value="100"/>
+			<animation-random-cycle-maxcount value="1" />
+			<animation path="models/wolf_die1.g3d"/>
+			<animation path="models/wolf_die2.g3d"/>
+			<sound enabled="true" start-time="0">
+				<sound-file path="sounds/d1.ogg"/>
+				<sound-file path="sounds/d2.ogg"/>
+			</sound>			
+			<fade value="false"/>
+		</skill>
+	</skills>
+	
+	<commands>
+		
+		<command>
+			<type value="stop"/>
+			<name value="stop"/>
+			<image path="../tech_stop.bmp"/>
+			<unit-requirements/>
+			<upgrade-requirements/>
+			<stop-skill value="stop_skill"/>
+		</command>
+
+		<command>
+			<type value="move"/>
+			<name value="move"/>
+			<image path="../tech_move.bmp"/>
+			<unit-requirements/>
+			<upgrade-requirements/>
+			<move-skill value="move_skill"/>
+		</command>
+
+		<command>
+			<type value="attack"/>
+			<name value="attack"/>
+			<image path="images/mummy_attack.bmp"/>
+			<unit-requirements/>
+			<upgrade-requirements/>
+			<move-skill value="move_skill"/>
+			<attack-skill value="attack_skill"/>
+		</command>
+	</commands>
+</unit>

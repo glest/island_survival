@@ -1,0 +1,90 @@
+<?xml version="1.0" standalone="no" ?>
+<unit>
+	<!-- *** parameters *** -->
+	<parameters>
+		<size value="2" />
+		<height value="1" />
+		<max-hp value="500" regeneration="0"/>
+		<max-ep value="0" />
+		<armor value="25" />
+		<armor-type value="wood"/>				
+		<sight value="5" />
+		<time value="5" />
+		<multi-selection value="false" />
+		<cellmap value="false"/>
+		<levels/>
+		<fields>
+			<field value="land" />
+		</fields>
+		<light enabled="false"/>
+		<unit-requirements>
+			<unit name="large_wooden_house" />
+		</unit-requirements>
+		<properties>
+		</properties>
+		<rotationAllowed value="true" />
+		<resource-requirements>
+			<resource name="wood" amount="25"/>	
+			<resource name="stone" amount="2"/>
+		</resource-requirements>
+		<upgrade-requirements />
+		<resource-requirements>
+		</resource-requirements>
+		<resources-stored>
+		</resources-stored>
+		<image path="../wreck/images/castle.bmp" />
+		<image-cancel path="../wreck/images/tech_cancel.bmp"/>
+		<meeting-point value="false"/>
+		<selection-sounds enabled="true">
+			<sound path="../wreck/sounds/tech_click.wav" />
+		</selection-sounds>
+		<command-sounds enabled="true">
+			<sound path="../wreck/sounds/tech_click.wav" />
+		</command-sounds>
+	</parameters>
+	
+	<!-- *** skills *** -->
+	<skills>
+
+		<skill>
+			<type value="stop" />
+			<name value="stop_skill"/>		
+			<ep-cost value="0" />
+			<speed value="300" />
+			<anim-speed value="100" />
+			<animation path="models/woodwall.g3d" />
+			<sound enabled="false" />
+		</skill>
+
+		<skill>
+			<type value="be_built" />
+			<name value="be_built_skill"/>		
+			<ep-cost value="0" />
+			<speed value="300" />
+			<anim-speed value="300" />
+			<animation path="models/woodwallbuild.g3d" />
+			<sound enabled="false" />
+		</skill>		
+		
+		<skill>
+			<type value="die" />
+			<name value="die_skill"/>		
+			<ep-cost value="0" />
+			<speed value="300" />
+			<anim-speed value="300" />
+			<animation path="models/woodwalldie.g3d" />
+			<particles value="true">
+			</particles>
+			<sound enabled="true" start-time="0">
+				<sound-file path="../wreck/sounds/wood1.wav"/>
+			</sound>			
+			<fade value="false"/>
+		</skill>
+
+	</skills>
+	
+	<!-- *** commands *** -->
+	<commands>	
+
+	</commands>
+</unit>

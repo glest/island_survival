@@ -1,0 +1,89 @@
+<?xml version="1.0" standalone="no" ?>
+<unit>
+	<!-- *** parameters *** -->
+	<parameters>
+		<size value="1" />
+		<height value="2" />
+		<max-hp value="200" regeneration="0"/>
+		<max-ep value="0" />
+		<armor value="50" />
+		<armor-type value="wood"/>				
+		<sight value="5" />
+		<time value="5" />
+		<multi-selection value="false" />
+		<cellmap value="false"/>
+		<levels/>
+		<fields>
+			<field value="land" />
+		</fields>
+		<properties />
+		<light enabled="true" red="0.3" green="0.3" blue="0.3"/>
+		<rotationAllowed value="false" />
+		<unit-requirements>
+			<unit name="campfire"/>
+		</unit-requirements>
+		<upgrade-requirements />
+		<resource-requirements>
+			<resource name="wood" amount="100"/>
+			<resource name="stone" amount="5"/>
+		</resource-requirements>
+		<resources-stored/>
+		<image path="images/lantern.jpg" />
+		<image-cancel path="../you/images/stop.jpg"/>
+		<meeting-point value="false"/>
+		<selection-sounds enabled="true">
+			<sound path="../wreck/sounds/tech_click.wav"/>
+		</selection-sounds>
+		<command-sounds enabled="true">
+			<sound path="../wreck/sounds/tech_click.wav"/>
+		</command-sounds>
+	</parameters>
+	
+	<!-- *** skills *** -->
+	<skills>
+		<!-- *** skill 0 *** -->
+		<skill>
+			<type value="be_built" />
+			<name value="be_built_skill"/>		
+			<ep-cost value="0" />
+			<speed value="120"/>
+			<speed value="120"/>
+			<anim-speed value="0" />
+			<animation path="models/lant_build.g3d" />
+			<sound enabled="false" />
+		</skill>
+		
+		<!-- *** skill 1 *** -->
+		<skill>
+			<type value="stop" />
+			<name value="stop_skill"/>		
+			<ep-cost value="0" />
+			<speed value="300" />
+			<anim-speed value="40" />
+			<animation path="models/lant_sit.g3d" />
+			<sound enabled="false" />
+		</skill>	
+		<!-- *** skill 2 *** -->
+		<skill>
+			<type value="die" />
+			<name value="die_skill"/>		
+			<ep-cost value="0" />
+			<speed value="300" />
+			<anim-speed value="0" />
+			<animation path="models/lant_die.g3d" />
+			<particles value="false"/>
+			<sound enabled="true" start-time="0">
+				<sound-file path="../wreck/sounds/tech_building_fall5.wav"/>
+			</sound>			
+			<fade value="false"/>
+		</skill>	
+
+		
+	</skills>
+	
+	<!-- *** commands *** -->
+	<commands>
+
+
+	</commands>
+</unit>

@@ -1,0 +1,1475 @@
+<?xml version="1.0" standalone="yes" ?> 
+<scenario>
+	<difficulty value="3"/>
+	<players>
+		<player control="human" faction="survivors" team="1"/>
+		<player control="cpu-mega" faction="survivors" team="1"/>
+		<player control="cpu-mega" faction="dwellers" team="2"/>
+		<player control="cpu-mega" faction="bees" team="2"/>
+	</players>
+	<map value="worlds"/>
+	<tileset value="islands"/>
+	<tech-tree value="stranded"/>
+	<default-resources value="false"/>
+	<default-units value="false"/>
+	<fog-of-war value="true"/>
+	<default-victory-conditions value="false"/>
+	<scripts>
+		<global>
+			kiwi_players = {}
+			kiwi_count = 0
+			af_players = {}
+			af_count = 0
+			crab_players = {}
+			crab_count = 0
+			is_attacking_you = false
+			monsters=false
+			monsters2=false
+			monsters3=false
+			monsters4=false
+			monstershealth=8
+			skeleton1=false
+			skeleton2=false
+		</global>
+		
+		<startup>
+			--disableSpeedChange()
+			setAttackWarningsEnabled(0)
+			disableAi(1)
+			disableAi(2)
+			createUnit('you', 0, {61, 489})
+			you=lastCreatedUnit()
+			setCameraPosition(unitPosition(you))
+			createUnit('wooden_chest', 0, {67, 481})
+			createUnit('wreck', 1, {62, 492})
+			createUnit('wooden_chest', 1, {67, 497})
+			giveResource('food', 0, 12);
+			giveResource('water', 0, 20);
+			createUnit('water_source', 2, {82, 442})
+			water= lastCreatedUnit()
+			createUnitNoSpacing('platform', 2, {450, 260})
+			platform= lastCreatedUnit()
+			cell_event_water = registerCellTriggerEventForUnitToUnit(you,water)
+			createUnit('bee_hive', 3, {191, 468})
+			hive= lastCreatedUnit()
+			createUnit('worker_bee', 3, {191, 468})
+			hivehealth=2
+			registerUnitTriggerEvent(hive)
+			registerDayNightEvent()
+			showMessage('m0', 'intro')
+			--togglePauseGame(1)
+			showMessage('m1', 'intro')
+			showMessage('m2', 'you')
+			showMessage('m3', 'you')
+			showMessage('m4', 'game')
+			showMessage('m5', 'game')
+			setDisplayText('ob1')
+			objective='objective_find_water'
+			
+			--for testing purposes only
+			
+				--showMessage('m3p9', 'you')
+				--showMessage('m3p10', 'you')
+				--setDisplayText('ob23')
+				--objective='objective_explore1'
+				--createUnitNoSpacing('trigger', 2, {55, 284})
+				--dog= lastCreatedUnit()
+				--cell_event_dog = registerCellTriggerEventForUnitToUnit(you,dog)
+				
+			--end of clause
+		</startup>
+
+		<unitTriggerEvent>
+			if hive == lastUnitTriggerEventUnit() then
+				if hivehealth == 2 then
+					if lastUnitTriggerEventType() == 1 and getUnitProperty(lastUnitTriggerEventUnit(),lastUnitTriggerEventType()) &lt; 900 then
+						hivehealth=1
+						createUnitNoSpacing('worker_bee', 3, {191, 468})
+						createUnitNoSpacing('worker_bee', 3, {191, 468})
+						createUnitNoSpacing('worker_bee', 3, {191, 468})
+						createUnitNoSpacing('worker_bee', 3, {191, 468})
+						createUnitNoSpacing('worker_bee', 3, {191, 468})
+						createUnitNoSpacing('worker_bee', 3, {191, 468})
+						createUnitNoSpacing('worker_bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+					end
+				elseif hivehealth == 1 then
+					if lastUnitTriggerEventType() == 1 and getUnitProperty(lastUnitTriggerEventUnit(),lastUnitTriggerEventType()) &lt; 400 then
+						hivehealth=0
+						createUnitNoSpacing('worker_bee', 3, {191, 468})
+						createUnitNoSpacing('worker_bee', 3, {191, 468})
+						createUnitNoSpacing('worker_bee', 3, {191, 468})
+						createUnitNoSpacing('worker_bee', 3, {191, 468})
+						createUnitNoSpacing('worker_bee', 3, {191, 468})
+						createUnitNoSpacing('worker_bee', 3, {191, 468})
+						createUnitNoSpacing('worker_bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						createUnitNoSpacing('bee', 3, {191, 468})
+						unregisterUnitTriggerEvent(hive)
+					end
+				end
+			end
+
+			if fboss == lastUnitTriggerEventUnit() then
+				if fbosshealth == 2 then
+					if lastUnitTriggerEventType() == 1 and getUnitProperty(lastUnitTriggerEventUnit(),lastUnitTriggerEventType()) &lt; 2200 then
+						fbosshealth=1
+						giveProductionCommand(fboss, 'wheat_monster')
+						giveProductionCommand(fboss, 'wheat_monster')
+						giveProductionCommand(fboss, 'wheat_monster')
+					end
+				elseif fbosshealth == 1 then
+					if lastUnitTriggerEventType() == 1 and getUnitProperty(lastUnitTriggerEventUnit(),lastUnitTriggerEventType()) &lt; 1100 then
+						fbosshealth=0
+						giveProductionCommand(fboss, 'wheat_monster')
+						giveProductionCommand(fboss, 'wheat_monster')
+						giveProductionCommand(fboss, 'wheat_monster')
+						giveProductionCommand(fboss, 'wheat_monster')
+						giveProductionCommand(fboss, 'wheat_monster')
+						unregisterUnitTriggerEvent(fboss)
+					end
+				end
+			end
+
+			if wo == lastUnitTriggerEventUnit() then
+				if monstershealth == 7 then
+					if lastUnitTriggerEventType() == 1 and getUnitProperty(lastUnitTriggerEventUnit(),lastUnitTriggerEventType()) &lt; 7000 then
+						monstershealth=6
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+					end
+				elseif monstershealth == 6 then
+					if lastUnitTriggerEventType() == 1 and getUnitProperty(lastUnitTriggerEventUnit(),lastUnitTriggerEventType()) &lt; 6000 then
+						monstershealth=5
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+					end
+				elseif monstershealth == 5 then
+					if lastUnitTriggerEventType() == 1 and getUnitProperty(lastUnitTriggerEventUnit(),lastUnitTriggerEventType()) &lt; 5000 then
+						monstershealth=4
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+					end
+				elseif monstershealth == 4 then
+					if lastUnitTriggerEventType() == 1 and getUnitProperty(lastUnitTriggerEventUnit(),lastUnitTriggerEventType()) &lt; 4000 then
+						monstershealth=3
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+					end
+				elseif monstershealth == 3 then
+					if lastUnitTriggerEventType() == 1 and getUnitProperty(lastUnitTriggerEventUnit(),lastUnitTriggerEventType()) &lt; 3000 then
+						monstershealth=2
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+					end
+				elseif monstershealth == 2 then
+					if lastUnitTriggerEventType() == 1 and getUnitProperty(lastUnitTriggerEventUnit(),lastUnitTriggerEventType()) &lt; 2000 then
+						monstershealth=1
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+					end
+				elseif monstershealth == 1 then
+					if lastUnitTriggerEventType() == 1 and getUnitProperty(lastUnitTriggerEventUnit(),lastUnitTriggerEventType()) &lt; 1000 then
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						giveProductionCommand(wo, 'monster')
+						unregisterUnitTriggerEvent(wo)
+					end
+				end
+			end
+
+		</unitTriggerEvent>
+
+		<dayNightTriggerEvent>
+			if monsters and getIsNightTime() == 1 then
+				math.randomseed(os.time())
+				rtime = math.random(1, 4)
+				if rtime == 1 then
+					createUnit('monster', 2, {77, 360})
+					z= lastCreatedUnit()
+					createUnit('monster', 2, {112, 354})
+					z2= lastCreatedUnit()
+					giveAttackCommand(z, you)
+					giveAttackCommand(z2, you)
+				elseif rtime == 2 then
+					createUnit('monster', 2, {118, 354})
+					z3= lastCreatedUnit()
+					giveAttackCommand(z3, you)
+				elseif rtime == 3 then
+					createUnit('monster', 2, {123, 355})
+					z= lastCreatedUnit()
+					giveAttackCommand(z, you)
+				elseif rtime == 4 then
+					createUnit('monster', 2, {123, 355})
+					z= lastCreatedUnit()
+					createUnit('monster', 2, {112, 354})
+					z2= lastCreatedUnit()
+					createUnit('monster', 2, {113, 357})
+					z3= lastCreatedUnit()
+					giveAttackCommand(z, you)
+					giveAttackCommand(z2, you)
+					giveAttackCommand(z3, you)
+				end
+			end
+
+			if monsters2 and getIsNightTime() == 1 then
+				math.randomseed(os.time())
+				rtime = math.random(1, 4)
+				if rtime == 1 then
+					createUnit('monster', 2, {77, 360})
+					a6z6= lastCreatedUnit()
+					createUnit('monster', 2, {112, 354})
+					a6z2= lastCreatedUnit()
+					giveAttackCommand(a6z6, you)
+					giveAttackCommand(a6z2, you)
+					createUnit('monster', 2, {112, 354})
+					a6z01= lastCreatedUnit()
+					giveAttackCommand(a6z01, defence)
+					createUnit('monster', 2, {112, 354})
+					a6z02= lastCreatedUnit()
+					giveAttackCommand(a6z02, defence)
+				elseif rtime == 2 then
+					createUnit('monster', 2, {118, 354})
+					a7z3= lastCreatedUnit()
+					createUnit('monster', 2, {118, 354})
+					a7z4= lastCreatedUnit()
+					createUnit('monster', 2, {118, 354})
+					a7z5= lastCreatedUnit()
+					giveAttackCommand(a7z3, you)
+					giveAttackCommand(a7z4, you)
+					giveAttackCommand(a7z5, you)
+					createUnit('monster', 2, {112, 354})
+					a7z01= lastCreatedUnit()
+					giveAttackCommand(a7z01, defence)
+					createUnit('monster', 2, {112, 354})
+					a7z02= lastCreatedUnit()
+					giveAttackCommand(a7z02, defence)
+					createUnit('monster', 2, {123, 355})
+					a7z03= lastCreatedUnit()
+					giveAttackCommand(a7z03, defence)
+				elseif rtime == 3 then
+					createUnit('monster', 2, {123, 355})
+					a7z= lastCreatedUnit()
+					giveAttackCommand(a7z, you)
+					createUnit('monster', 2, {112, 354})
+					a7z02= lastCreatedUnit()
+					giveAttackCommand(a7z02, defence)
+				elseif rtime == 4 then
+					createUnit('monster', 2, {123, 355})
+					a8z= lastCreatedUnit()
+					createUnit('monster', 2, {112, 354})
+					a8z2= lastCreatedUnit()
+					createUnit('monster', 2, {113, 357})
+					a8z3= lastCreatedUnit()
+					giveAttackCommand(a8z, you)
+					giveAttackCommand(a8z2, you)
+					giveAttackCommand(a8z3, you)
+					createUnit('monster', 2, {112, 354})
+					a8z01= lastCreatedUnit()
+					giveAttackCommand(a8z01, defence)
+					createUnit('monster', 2, {112, 354})
+					a8z02= lastCreatedUnit()
+					giveAttackCommand(a8z02, defence)
+				end
+			end
+
+			if monsters3 and getIsNightTime() == 1 then
+				math.randomseed(os.time())
+				rtime = math.random(1, 4)
+				if rtime == 1 then
+					createUnit('monster', 2, {77, 360})
+					a5z= lastCreatedUnit()
+					createUnit('monster', 2, {112, 354})
+					a5z2= lastCreatedUnit()
+					giveAttackCommand(a5z, house)
+					giveAttackCommand(a5z2, you)
+				elseif rtime == 2 then
+					createUnit('monster', 2, {118, 354})
+					a5z3= lastCreatedUnit()
+					giveAttackCommand(a5z3, you)
+				elseif rtime == 3 then
+					createUnit('monster', 2, {123, 355})
+					a5z= lastCreatedUnit()
+					giveAttackCommand(a5z, house)
+				elseif rtime == 4 then
+					createUnit('monster', 2, {123, 355})
+					a4z= lastCreatedUnit()
+					createUnit('monster', 2, {112, 354})
+					a4z2= lastCreatedUnit()
+					createUnit('monster', 2, {113, 357})
+					a4z3= lastCreatedUnit()
+					giveAttackCommand(a4z, you)
+					giveAttackCommand(a4z2, house)
+					giveAttackCommand(a4z3, house)
+				end
+			end
+
+			if monsters4 and getIsNightTime() == 1 then
+				math.randomseed(os.time())
+				rtime = math.random(1, 4)
+				if rtime == 1 then
+					createUnit('monster', 2, {77, 360})
+					a3z= lastCreatedUnit()
+					createUnit('monster', 2, {112, 354})
+					a3z2= lastCreatedUnit()
+					giveAttackCommand(a3z, you)
+					giveAttackCommand(a3z2, you)
+					createUnit('monster', 2, {112, 354})
+					aaz01= lastCreatedUnit()
+					giveAttackCommand(aaz01, defence)
+					createUnit('monster', 2, {112, 354})
+					a3z02= lastCreatedUnit()
+					giveAttackCommand(a3z02, defence)
+				elseif rtime == 2 then
+					createUnit('monster', 2, {118, 354})
+					a2z3= lastCreatedUnit()
+					createUnit('monster', 2, {118, 354})
+					a2z4= lastCreatedUnit()
+					createUnit('monster', 2, {118, 354})
+					a2z5= lastCreatedUnit()
+					giveAttackCommand(a2z3, you)
+					giveAttackCommand(a2z4, you)
+					giveAttackCommand(a2z5, you)
+					createUnit('monster', 2, {112, 354})
+					a2z01= lastCreatedUnit()
+					giveAttackCommand(a2z01, defence)
+					createUnit('monster', 2, {112, 354})
+					a2z02= lastCreatedUnit()
+					giveAttackCommand(a2z02, defence)
+					createUnit('monster', 2, {123, 355})
+					az03= lastCreatedUnit()
+					giveAttackCommand(az03, defence)
+				elseif rtime == 3 then
+					createUnit('monster', 2, {123, 355})
+					a1z= lastCreatedUnit()
+					giveAttackCommand(a1z, you)
+					createUnit('monster', 2, {112, 354})
+					a1z02= lastCreatedUnit()
+					giveAttackCommand(a1z02, defence2)
+				elseif rtime == 4 then
+					createUnit('monster', 2, {123, 355})
+					a0z= lastCreatedUnit()
+					createUnit('monster', 2, {112, 354})
+					a0z2= lastCreatedUnit()
+					createUnit('monster', 2, {113, 357})
+					a0z3= lastCreatedUnit()
+					createUnit('monster', 2, {113, 357})
+					a0z4= lastCreatedUnit()
+					giveAttackCommand(a0z, you)
+					giveAttackCommand(a0z2, you)
+					giveAttackCommand(a0z3, you)
+					giveAttackCommand(a0z4, you)
+					createUnit('monster', 2, {112, 354})
+					az001= lastCreatedUnit()
+					giveAttackCommand(az001, defence2)
+					createUnit('monster', 2, {112, 354})
+					az002= lastCreatedUnit()
+					giveAttackCommand(az002, defence2)
+					createUnit('monster', 2, {112, 354})
+					az003= lastCreatedUnit()
+					giveAttackCommand(az003, defence2)
+				end
+			end
+
+			if skeleton1 and getIsNightTime() == 1 then
+				math.randomseed(os.time())
+				rtime = math.random(1, 2)
+				if rtime == 1 then
+					createUnit('skeleton', 2, {445, 283})
+					skelly1= lastCreatedUnit()
+					giveAttackCommand(skelly1, you)
+					createUnit('skeleton', 2, {445, 283})
+				elseif rtime == 2 then
+					createUnit('skeleton', 2, {445, 283})
+					skelly1= lastCreatedUnit()
+					giveAttackCommand(skelly1, you)
+					createUnit('skeleton', 2, {445, 283})
+					skelly2= lastCreatedUnit()
+					giveAttackCommand(skelly2, defence)
+				end
+			end
+
+			if skeleton2 and getIsNightTime() == 1 then
+				math.randomseed(os.time())
+				rtime = math.random(1, 2)
+				if rtime == 1 then
+					createUnit('skeleton', 2, {445, 283})
+					skelly3= lastCreatedUnit()
+					giveAttackCommand(skelly3, stonetower)
+					createUnit('skeleton', 2, {445, 283})
+					skelly4= lastCreatedUnit()
+					giveAttackCommand(skelly4, stonetower)
+				elseif rtime == 2 then
+					createUnit('skeleton', 2, {445, 283})
+					skelly5= lastCreatedUnit()
+					giveAttackCommand(skelly5, you)
+				end
+			end
+		</dayNightTriggerEvent>
+
+		<unitCreatedOfType type="shelter">
+			if objective=='objective_shelter' and unitCountOfType(0, 'shelter') &gt;= 1 then
+				showMessage('m1p3', 'you')
+				setDisplayText('ob4')
+				objective='objective_large_wooden_chest'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="large_wooden_chest">
+			if objective=='objective_large_wooden_chest' and unitCountOfType(0, 'large_wooden_chest') &gt;= 1 then
+				showMessage('m1p4', 'you')
+				setDisplayText('ob5')
+				objective='objective_stone1'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="stone_chest">
+			if objective=='objective_stone_chest' and unitCountOfType(0, 'stone_chest') &gt;= 1 then
+				showMessage('m1p6', 'you')
+				showMessage('m1p7', 'you')
+				setDisplayText('ob7')
+				objective='objective_campfire'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="campfire">
+			if objective=='objective_campfire' and unitCountOfType(0, 'campfire') &gt;= 1 then
+				showMessage('m1p8', 'you')
+				showMessage('m2p1', 'you')
+				setDisplayText('ob8')
+				objective='objective_large_stone_chest'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="large_stone_chest">
+			if objective=='objective_large_stone_chest' and unitCountOfType(0, 'large_stone_chest') &gt;= 1 then
+				showMessage('m2p2', 'you')
+				showMessage('m2p3', 'you')
+				setDisplayText('ob9')
+				objective='objective_small_wooden_house'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="small_wooden_house">
+			if objective=='objective_small_wooden_house' and unitCountOfType(0, 'small_wooden_house') &gt;= 1 then
+				house= lastCreatedUnit()
+				showMessage('m2p4', 'you')
+				showMessage('m2p5', 'you')
+				setDisplayText('ob10')
+				objective='objective_flowers'
+				monsters=true
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="flower_patch">
+			if objective=='objective_flowers' and unitCountOfType(0, 'flower_patch') &gt;= 3 then
+				showMessage('m2p51', 'you')
+				setDisplayText('ob101')
+				objective='objective_lantern'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="lantern">
+			if objective=='objective_lantern' and unitCountOfType(0, 'lantern') &gt;= 1 then
+				showMessage('m2p6', 'you')
+				setDisplayText('ob11')
+				objective='objective_well'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="small_well">
+			if objective=='objective_well' and unitCountOfType(0, 'small_well') &gt;= 1 then
+				showMessage('m2p7', 'you')
+				setDisplayText('ob12')
+				objective='objective_iron_ore'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="furnace">
+			if objective=='objective_furnace' and unitCountOfType(0, 'furnace') &gt;= 1 then
+				showMessage('m2p9', 'you')
+				setDisplayText('ob14')
+				objective='objective_iron_chest'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="iron_chest">
+			if objective=='objective_iron_chest' and unitCountOfType(0, 'iron_chest') &gt;= 1 then
+				showMessage('m2p10', 'game')
+				setDisplayText('ob15')
+				objective='objective_simple_defence_tower'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="simple_defence_tower">
+			if objective=='objective_simple_defence_tower' and unitCountOfType(0, 'simple_defence_tower') &gt;= 1 then
+				defence= lastCreatedUnit()
+				showMessage('m3p1', 'you')
+				showMessage('m3p2', 'you')
+				setDisplayText('ob16')
+				monsters2=true
+				objective='objective_large_wooden_house'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="large_wooden_house">
+			if objective=='objective_large_wooden_house' and unitCountOfType(0, 'large_wooden_house') &gt;= 1 then
+				monsters3=true
+				showMessage('m3p3', 'you')
+				setDisplayText('ob17')
+				objective='objective_wooden_walls'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="wooden_fence">
+			if objective=='objective_wooden_walls' and unitCountOfType(0, 'wooden_fence') &gt;= 5 then
+				showMessage('m3p4', 'you')
+				setDisplayText('ob18')
+				objective='objective_wooden_gate'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="wooden_gate">
+			if objective=='objective_wooden_gate' and unitCountOfType(0, 'wooden_gate') &gt;= 1 then
+				showMessage('m3p5', 'you')
+				setDisplayText('ob19')
+				objective='objective_advanced_defence_tower'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="advanced_defence_tower">
+			if objective=='objective_advanced_defence_tower' and unitCountOfType(0, 'advanced_defence_tower') &gt;= 1 then
+				defence2= lastCreatedUnit()
+				showMessage('m3p52', 'you')
+				setDisplayText('ob20')
+				monsters4=true
+				objective='objective_wheat_garden'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="wheat_garden">
+			if objective=='objective_wheat_garden' and unitCountOfType(0, 'wheat_garden') &gt;= 1 then
+				showMessage('m3p6', 'you')
+				showMessage('m3p7', 'you')
+				setDisplayText('ob21')
+				objective='objective_shack'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="wooden_shack">
+			if objective=='objective_shack' and unitCountOfType(0, 'wooden_shack') &gt;= 1 then
+				showMessage('m3p8', 'you')
+				setDisplayText('ob22')
+				objective='objective_trap'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="small_animal_trap">
+			if objective=='objective_trap' and unitCountOfType(0, 'small_animal_trap') &gt;= 2 then
+				showMessage('m3p9', 'you')
+				showMessage('m3p10', 'you')
+				setDisplayText('ob23')
+				skeleton1=true
+				objective='objective_explore1'
+				createUnitNoSpacing('trigger', 2, {55, 284})
+				dog= lastCreatedUnit()
+				cell_event_dog = registerCellTriggerEventForUnitToUnit(you,dog)
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="workbench">
+			if objective=='objective_craft' and unitCountOfType(0, 'workbench') &gt;= 1 then
+				showMessage('m4p4', 'you')
+				setDisplayText('ob25')
+				objective='objective_craftknife'
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="knife">
+			if objective=='objective_craftknife' and unitCountOfType(0, 'knife') &gt;= 1 then
+				showMessage('m4p5', 'you')
+				setDisplayText('ob26')
+				objective='objective_beach'
+				cell_event_7 = registerCellTriggerEventForUnitToUnit(you,platform)
+			end
+		</unitCreatedOfType>
+
+		<unitCreatedOfType type="stone_defence_tower">
+			if objective=='objective_stonetower' and unitCountOfType(0, 'stone_defence_tower') &gt;= 1 then
+				stonetower= lastCreatedUnit()
+				skeleton2=true
+				showMessage('m4p9', 'you')
+				showMessage('m5p0', 'game')
+				setDisplayText('ob28')
+				objective='objective_collect_raft'
+			end
+		</unitCreatedOfType>
+
+		<resourceHarvested>
+			if objective=='objective_stone1' and resourceAmount('stone', 0) &gt;= 25 then
+				showMessage('m1p5', 'you')
+				setDisplayText('ob6')
+				objective='objective_stone_chest'
+			end
+			
+			if objective=='objective_iron_ore' and resourceAmount('iron_ore', 0) &gt;= 100 then
+				showMessage('m2p8', 'game')
+				setDisplayText('ob13')
+				objective='objective_furnace'
+			end
+
+			if objective=='objective_collect_raft' and resourceAmount('gold', 0) &gt;= 400 and resourceAmount('diamond', 0) &gt;= 18 then
+				showMessage('m5p1', 'you')
+				objective='objective_build_raft'
+				cell_event_raft = registerCellTriggerEventForUnitToUnit(you,platform)
+				setDisplayText('ob29')
+			end
+		</resourceHarvested>
+
+		<unitCreated>					
+		</unitCreated>
+
+		<cellTriggerEvent>
+			if triggeredCellEventId() == cell_event_raft then
+				if objective=='objective_build_raft' then
+					giveResource('gold', 0, -400);
+					giveResource('diamond', 0, -18);
+					createUnit('raft', 0, {400, 210})
+					destroyUnit(you)
+					you=lastCreatedUnit()
+					setCameraPosition(unitPosition(you))
+					showMessage('m5p2', 'you')
+					setDisplayText('ob30')
+					objective='objective_explore_islands'
+				else
+					createUnit('raft', 0, {400, 210})
+					destroyUnit(you)
+					you=lastCreatedUnit()
+					setCameraPosition(unitPosition(raft))
+				end
+			elseif triggeredCellEventId() == cell_event_7 then
+				unregisterCellTriggerEvent(cell_event_7)
+				createUnit('broken_tent', 1, {450, 260})
+				createUnit('dead_skeleton', 1, {447, 263})
+				createUnitNoSpacing('wooden_wall', 1, {452, 265})
+				createUnitNoSpacing('wooden_wall', 1, {450, 265})
+				createUnitNoSpacing('wooden_wall', 1, {448, 265})
+				createUnitNoSpacing('broken_wooden_wall', 1, {446, 265})
+				showMessage('m4p6', 'you')
+				showMessage('m4p7', 'you')
+				setDisplayText('ob27')
+				objective='objective_stonetower'
+			elseif triggeredCellEventId() == cell_event_dog then
+				unregisterCellTriggerEvent(cell_event_dog)
+				showMessage('m4p1', 'you')
+				showMessage('m4p2', 'you')
+				showMessage('m4p3', 'game')
+				setDisplayText('ob24')
+				objective='objective_craft'
+				destroyUnit(dog);
+				createUnit('dog', 0, {55, 284})
+				dog2= lastCreatedUnit()
+			elseif triggeredCellEventId() == cell_event_water then
+				unregisterCellTriggerEvent(cell_event_water)
+				giveResource('water', 0, 50);
+				addConsoleText('atig')
+				showMessage('m0p1', 'you')
+				showMessage('m0p2', 'you')
+				showMessage('m0p3', 'you')
+				setDisplayText('ob2')
+				objective='objective_crab'
+				createUnit('crab', 2, {64, 487})
+				crab01= lastCreatedUnit()
+				timer_event_water = startTimerEvent()
+			elseif triggeredCellEventId() == cell_event_water2 then
+				unregisterCellTriggerEvent(cell_event_water2)
+				giveResource('water', 0, 50);
+				addConsoleText('atig')
+			end
+		</cellTriggerEvent> 
+
+		<timerTriggerEvent>
+			if triggeredTimerEventId() == timer_event_hive then
+				if timerEventSecondsElapsed(triggeredTimerEventId()) &gt;= 320 then
+					stopTimerEvent(timer_event_hive)
+					createUnit('bee_hive', 3, {191, 468})
+					hive= lastCreatedUnit()
+					createUnit('worker_bee', 3, {191, 468})
+					hivehealth=2
+					registerUnitTriggerEvent(hive)
+				end
+			elseif triggeredTimerEventId() == timer_event1d then
+				if timerEventSecondsElapsed(triggeredTimerEventId()) &gt;= 40 then
+					stopTimerEvent(timer_event1d)
+					createUnit('dog', 0, {66, 486})
+					dog2= lastCreatedUnit()
+					addConsoleText('dogrespawn')
+				end
+			elseif triggeredTimerEventId() == timer_event_water then
+				if timerEventSecondsElapsed(triggeredTimerEventId()) &gt;= 5 then
+					stopTimerEvent(timer_event_water)
+					cell_event_water2 = registerCellTriggerEventForUnitToUnit(you,water)
+					timer_event_water = startTimerEvent()
+				end
+			elseif triggeredTimerEventId() == timer_event1 then
+				if timerEventSecondsElapsed(triggeredTimerEventId()) &gt;= 20 then
+					stopTimerEvent(timer_event1)
+					createUnit('you', 0, {66, 486})
+					you=lastCreatedUnit()
+					setCameraPosition(unitPosition(you))
+					giveResource('food', 0, 12);
+					giveResource('water', 0, 20);
+					if is_attacking_you then
+						house=you
+					elseif objective=='objective_explore1' then
+						unregisterCellTriggerEvent(cell_event_dog)
+						cell_event_dog = registerCellTriggerEventForUnitToUnit(you,dog)
+					elseif objective=='objective_beach' then
+						unregisterCellTriggerEvent(cell_event_7)
+						cell_event_7 = registerCellTriggerEventForUnitToUnit(you,platform)
+					elseif objective=='objective_build_raft' or objective=='objective_explore_islands' then
+						unregisterCellTriggerEvent(cell_event_raft)
+						cell_event_raft = registerCellTriggerEventForUnitToUnit(you,platform)
+					end
+					addConsoleText('yourespawn')
+				end
+			elseif triggeredTimerEventId() == timer_eventwm1 then
+				if timerEventSecondsElapsed(triggeredTimerEventId()) &gt;= 20 then
+					stopTimerEvent(timer_eventwm1)
+					createUnit('wheat_monster', 2, {180, 416})
+					wm1=lastCreatedUnit()
+				end
+			elseif triggeredTimerEventId() == timer_eventlion1 then
+				if timerEventSecondsElapsed(triggeredTimerEventId()) &gt;= 20 then
+					stopTimerEvent(timer_eventlion1)
+					createUnit('large_lion', 2, {198, 283})
+					lion1= lastCreatedUnit()
+					createUnit('baby_lion', 2, {198, 283})
+					blion4= lastCreatedUnit()
+				end
+			elseif triggeredTimerEventId() == timer_eventwheatm then
+				if timerEventSecondsElapsed(triggeredTimerEventId()) &gt;= 20 then
+					stopTimerEvent(timer_eventwheatm)
+					createUnit('wheat_monster', 2, {43, 372})
+					wm7= lastCreatedUnit()
+					createUnit('wheat_monster', 2, {47, 376})
+					wm6= lastCreatedUnit()
+					createUnit('wheat_monster', 2, {166, 280})
+					wm5= lastCreatedUnit()
+				end
+			end
+		</timerTriggerEvent>  	
+		
+		<unitDied>
+			if lastDeadUnit()==bear then
+				addConsoleText('bear')
+				giveResource('food', 0, 30); 
+				giveResource('furs', 0, 20); 
+				math.randomseed(os.time())
+				rtime = math.random(1, 4)
+				if rtime == 1 then
+					createUnit('bear', 2, {440, 305})
+					bear=lastCreatedUnit()
+				elseif rtime == 2 then
+					createUnit('bear', 2, {233, 427})
+					bear=lastCreatedUnit()
+				elseif rtime == 3 then
+					createUnit('bear', 2, {184, 351})
+					bear=lastCreatedUnit()
+				elseif rtime == 4 then
+					createUnit('bear', 2, {304, 273})
+					bear=lastCreatedUnit()
+				end
+			elseif lastDeadUnit()==deernew1 then
+				addConsoleText('deer')
+				giveResource('food', 0, 30); 
+				giveResource('furs', 0, 8); 
+				createUnit('deer', 2, {271, 399})
+				deernew1= lastCreatedUnit()
+			elseif lastDeadUnit()==deernew2 then
+				addConsoleText('deer')
+				giveResource('food', 0, 30); 
+				giveResource('furs', 0, 8); 
+			elseif lastDeadUnit()==rabbit01 then
+				addConsoleText('rabbit')
+				giveResource('furs', 0, 1); 
+				giveResource('food', 0, 12); 
+				createUnit('rabbit', 2, {259, 348})
+				rabbit1= lastCreatedUnit()
+			elseif lastDeadUnit()==rabbit02 then
+				addConsoleText('rabbit')
+				giveResource('furs', 0, 1); 
+				giveResource('food', 0, 12); 
+				createUnit('rabbit', 2, {274, 402})
+				rabbit2= lastCreatedUnit()
+			elseif lastDeadUnit()==rabbit1 then
+				addConsoleText('rabbit')
+				giveResource('furs', 0, 1); 
+				giveResource('food', 0, 12); 
+				createUnit('rabbit', 2, {258, 383})
+				rabbit01= lastCreatedUnit()
+			elseif lastDeadUnit()==rabbit2 then
+				addConsoleText('rabbit')
+				giveResource('furs', 0, 1); 
+				giveResource('food', 0, 12); 
+				createUnit('rabbit', 2, {308, 368})
+				rabbit02= lastCreatedUnit()
+			elseif lastDeadUnit()==rabbit3 then
+				addConsoleText('rabbit')
+				giveResource('furs', 0, 1); 
+				giveResource('food', 0, 12); 
+			elseif lastDeadUnit()==rabbit4 then
+				addConsoleText('rabbit')
+				giveResource('furs', 0, 1); 
+				giveResource('food', 0, 12); 
+			elseif lastDeadUnit()==rabbit5 then
+				addConsoleText('rabbit')
+				giveResource('furs', 0, 1); 
+				giveResource('food', 0, 12); 
+			elseif lastDeadUnit()==rabbit6 then
+				addConsoleText('rabbit')
+				giveResource('furs', 0, 1); 
+				giveResource('food', 0, 12); 
+			elseif lastDeadUnit()==fboss then
+				showMessage('fboss1', 'you')
+				showMessage('fboss2', 'game')
+				giveResource('furs', 0, 50); 
+				giveResource('diamond', 0, 2); 
+			elseif lastDeadUnit()==you then
+				addConsoleText('die')
+				timer_event1 = startTimerEvent()
+			elseif lastDeadUnit()==dog2 then
+				addConsoleText('dogdie')
+				timer_event1d = startTimerEvent()
+			elseif lastDeadUnit()==lion1 then
+				addConsoleText('lion')
+				timer_eventlion1 = startTimerEvent()
+				giveResource('furs', 0, 20); 
+				giveResource('food', 0, 50); 
+			elseif lastDeadUnit()==lion2 then
+				addConsoleText('lion')
+				giveResource('furs', 0, 20); 
+				giveResource('food', 0, 50); 
+				createUnit('large_lion', 2, {327, 376})
+				lion3= lastCreatedUnit()
+			elseif lastDeadUnit()==lion3 then
+				addConsoleText('lion')
+				giveResource('furs', 0, 20); 
+				giveResource('food', 0, 50); 
+			elseif lastDeadUnit()==lion4 then
+				addConsoleText('lion')
+				giveResource('furs', 0, 20); 
+				giveResource('food', 0, 50); 
+			elseif lastDeadUnit()==lion5 then
+				addConsoleText('lion')
+				giveResource('furs', 0, 20); 
+				giveResource('food', 0, 50); 
+			elseif lastDeadUnit()==lion6 then
+				addConsoleText('lion')
+				giveResource('furs', 0, 20); 
+				giveResource('food', 0, 50); 
+			elseif lastDeadUnit()==blion1 then
+				addConsoleText('blion')
+				giveResource('furs', 0, 5); 
+				giveResource('food', 0, 8); 
+				createUnit('baby_lion', 2, {202, 283})
+				blion1= lastCreatedUnit()
+			elseif lastDeadUnit()==blion2 then
+				addConsoleText('blion')
+				giveResource('furs', 0, 5); 
+				giveResource('food', 0, 8);
+			elseif lastDeadUnit()==blion3 then
+				addConsoleText('blion')
+				giveResource('furs', 0, 5); 
+				giveResource('food', 0, 8);
+			elseif lastDeadUnit()==blion4 then
+				addConsoleText('blion')
+				giveResource('furs', 0, 5); 
+				giveResource('food', 0, 8);
+			elseif lastDeadUnit()==wm1 then
+				addConsoleText('wheatmonster')
+				timer_eventwm1 = startTimerEvent()
+				giveResource('furs', 0, 10); 
+				giveResource('wheat', 0, 50); 
+			elseif lastDeadUnit()==wm2 then
+				addConsoleText('wheatmonster')
+				giveResource('furs', 0, 10); 
+				giveResource('wheat', 0, 50); 
+			elseif lastDeadUnit()==wm3 then
+				addConsoleText('wheatmonster')
+				giveResource('furs', 0, 10); 
+				giveResource('wheat', 0, 50); 
+			elseif lastDeadUnit()==wm4 then
+				addConsoleText('wheatmonster')
+				giveResource('furs', 0, 10); 
+				giveResource('wheat', 0, 50); 
+			elseif lastDeadUnit()==wm5 then
+				addConsoleText('wheatmonster')
+				giveResource('furs', 0, 10); 
+				giveResource('wheat', 0, 50); 
+				timer_eventwheatm = startTimerEvent()
+			elseif lastDeadUnit()==wm6 then
+				addConsoleText('wheatmonster')
+				giveResource('furs', 0, 10); 
+				giveResource('wheat', 0, 50); 
+			elseif lastDeadUnit()==wm7 then
+				addConsoleText('wheatmonster')
+				giveResource('furs', 0, 10); 
+				giveResource('wheat', 0, 50); 
+			elseif lastDeadUnit()==duck1 then
+				addConsoleText('duck')
+				giveResource('food', 0, 10); 
+				math.randomseed(os.time())
+				rtime = math.random(1, 4)
+				if rtime == 1 then
+					createUnit('duck', 2, {254, 300})
+					duck1= lastCreatedUnit()
+				elseif rtime == 2 then
+					createUnit('duck', 2, {265, 313})
+					duck1= lastCreatedUnit()
+				elseif rtime == 3 then
+					createUnit('duck', 2, {278, 298})
+					duck1= lastCreatedUnit()
+				elseif rtime == 4 then
+					createUnit('duck', 2, {2283, 314})
+					duck1= lastCreatedUnit()
+				end
+			elseif lastDeadUnit()==duck2 then
+				addConsoleText('duck')
+				giveResource('food', 0, 10); 
+			elseif lastDeadUnit()==duck3 then
+				addConsoleText('duck')
+				giveResource('food', 0, 10); 
+				createUnit('duck', 2, {151, 306})
+				duck3= lastCreatedUnit()
+				createUnit('duck', 2, {153, 313})
+				duck5= lastCreatedUnit()
+			elseif lastDeadUnit()==duck4 then
+				addConsoleText('duck')
+				giveResource('food', 0, 10);
+			elseif lastDeadUnit()==duck5 then
+				addConsoleText('duck')
+				giveResource('food', 0, 10); 
+			elseif lastDeadUnit()==hive then
+				addConsoleText('hive')
+				giveResource('food', 0, 50); 
+				giveResource('gold', 0, 100); 
+				timer_event_hive = startTimerEvent()
+			elseif lastDeadUnit()==crab01 then
+				objective='objective_shelter'
+				createUnit('bear', 2, {277, 403})
+				bear= lastCreatedUnit()
+				createUnit('rabbit', 2, {280, 343})
+				rabbit1= lastCreatedUnit()
+				createUnit('rabbit', 2, {276, 360})
+				rabbit2= lastCreatedUnit()
+				createUnit('rabbit', 2, {283, 364})
+				rabbit3= lastCreatedUnit()
+				createUnit('rabbit', 2, {290, 342})
+				rabbit4= lastCreatedUnit()
+				createUnit('rabbit', 2, {289, 352})
+				rabbit5= lastCreatedUnit()
+				createUnit('rabbit', 2, {287, 359})
+				rabbit6= lastCreatedUnit()
+				createUnit('duck', 2, {254, 296})
+				duck1= lastCreatedUnit()
+				createUnit('duck', 2, {265, 313})
+				duck2= lastCreatedUnit()
+				createUnit('duck', 2, {278, 298})
+				duck3= lastCreatedUnit()
+				createUnit('duck', 2, {283, 314})
+				duck4= lastCreatedUnit()
+				createUnit('field_creature', 2, {310, 324})
+				fboss= lastCreatedUnit()
+				fbosshealth=2
+				registerUnitTriggerEvent(fboss)
+				createUnit('arctic_fox', 2, {108, 71})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {108, 71})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {108, 71})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {108, 71})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {49, 73})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {22, 32})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {122, 28})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {166, 31})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {30, 93})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {102, 103})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {30, 93})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {102, 103})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {108, 71})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {108, 71})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {108, 71})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {108, 71})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {49, 73})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {22, 32})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {122, 28})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {166, 31})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {30, 93})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {102, 103})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {30, 93})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('arctic_fox', 2, {102, 103})
+				af_count=af_count+1
+				af_players[af_count]= lastCreatedUnit()
+				createUnit('baby_lion', 2, {202, 283})
+				blion1= lastCreatedUnit()
+				createUnit('baby_lion', 2, {222, 267})
+				blion2= lastCreatedUnit()
+				createUnit('baby_lion', 2, {203, 263})
+				blion3= lastCreatedUnit()
+				createUnit('large_lion', 2, {198, 283})
+				lion1= lastCreatedUnit()
+				createUnit('large_lion', 2, {207, 278})
+				lion2= lastCreatedUnit()
+				createUnit('large_lion', 2, {222, 269})
+				lion3= lastCreatedUnit()
+				createUnit('large_lion', 2, {201, 275})
+				lion4= lastCreatedUnit()
+				createUnit('large_lion', 2, {213, 286})
+				lion5= lastCreatedUnit()
+				createUnit('large_lion', 2, {208, 264})
+				lion6= lastCreatedUnit()
+				createUnit('monster_king', 2, {415, 377})
+				wo= lastCreatedUnit()
+				monstershealth=7
+				registerUnitTriggerEvent(wo)
+				createUnit('wheat_monster', 2, {180, 416})
+				wm1= lastCreatedUnit()
+				createUnit('wheat_monster', 2, {68, 396})
+				wm2= lastCreatedUnit()
+				createUnit('wheat_monster', 2, {80, 384})
+				wm3= lastCreatedUnit()
+				createUnit('wheat_monster', 2, {110, 366})
+				wm4= lastCreatedUnit()
+				createUnit('wheat_monster', 2, {166, 280})
+				wm5= lastCreatedUnit()
+				createUnit('large_turtle', 2, {72, 492})
+				lt= lastCreatedUnit()
+				createUnit('small_turtle', 2, {52, 482})
+				st= lastCreatedUnit()
+				createUnit('wolf', 2, {48, 448})
+				wolf= lastCreatedUnit()
+				createUnit('wolf', 2, {53, 461})
+				wolf2= lastCreatedUnit()
+				createUnit('chimpanzee', 2, {74, 471})
+				chimp2= lastCreatedUnit()
+				createUnit('kiwi', 2, {86, 467})
+				kiwi_count=kiwi_count+1
+				kiwi_players[kiwi_count] = lastCreatedUnit()
+				createUnit('kiwi', 2, {66, 476})
+				kiwi_count=kiwi_count+1
+				kiwi_players[kiwi_count]= lastCreatedUnit()
+				createUnit('kiwi', 2, {100, 442})
+				kiwi_count=kiwi_count+1
+				kiwi_players[kiwi_count]= lastCreatedUnit()
+				createUnit('kiwi', 2, {81, 435})
+				kiwi_count=kiwi_count+1
+				kiwi_players[kiwi_count]= lastCreatedUnit()
+				createUnit('crab', 2, {52, 483})
+				crab_count=crab_count+1
+				crab_players[crab_count]= lastCreatedUnit()
+				createUnit('crab', 2, {82, 490})
+				crab_count=crab_count+1
+				crab_players[crab_count]= lastCreatedUnit()
+				createUnit('crab', 2, {64, 484})
+				crab_count=crab_count+1
+				crab_players[crab_count]= lastCreatedUnit()
+				createUnit('crab', 2, {96, 486})
+				crab_count=crab_count+1
+				crab_players[crab_count]= lastCreatedUnit()
+				createUnit('crab', 2, {115, 487})
+				crab_count=crab_count+1
+				crab_players[crab_count]= lastCreatedUnit()
+				createUnit('crab', 2, {103, 487})
+				crab_count=crab_count+1
+				crab_players[crab_count]= lastCreatedUnit()
+				createUnit('deer', 2, {60, 464})
+				deer= lastCreatedUnit()
+				createUnit('deer', 2, {195, 365})
+				deer01= lastCreatedUnit()
+				createUnit('deer', 2, {195, 365})
+				deer02= lastCreatedUnit()
+				createUnit('deer', 2, {195, 365})
+				deer03= lastCreatedUnit()
+				createUnit('deer', 2, {195, 365})
+				deer04= lastCreatedUnit()
+				createUnit('deer', 2, {195, 365})
+				deer05= lastCreatedUnit()
+				createUnit('deer', 2, {282, 404})
+				deernew1= lastCreatedUnit()
+				createUnit('deer', 2, {303, 411})
+				deernew2= lastCreatedUnit()
+				giveResource('food', 0, 6); 
+				objective='objective_shelter'
+				showMessage('m0p4', 'you')
+				showMessage('m1p1', 'you')
+				showMessage('m1p2', 'you')
+				setDisplayText('ob3')
+			elseif lastDeadUnit()==chimp2 then
+				addConsoleText('chimp')
+				giveResource('food', 0, 20); 
+				giveResource('furs', 0, 2);
+				math.randomseed(os.time())
+				rtime = math.random(1, 4)
+				if rtime == 1 then
+					createUnit('chimpanzee', 2, {74, 471})
+					chimp2= lastCreatedUnit()
+				elseif rtime == 2 then
+					createUnit('chimpanzee', 2, {107, 479})
+					chimp2= lastCreatedUnit()
+				elseif rtime == 3 then
+					createUnit('chimpanzee', 2, {57, 475})
+					chimp2= lastCreatedUnit()
+				elseif rtime == 4 then
+					createUnit('chimpanzee', 2, {110, 458})
+					chimp2= lastCreatedUnit()
+				end
+			elseif lastDeadUnit()==deer01 then
+				addConsoleText('deer')
+				giveResource('food', 0, 30); 
+				giveResource('furs', 0, 8); 
+			elseif lastDeadUnit()==deer02 then
+				addConsoleText('deer')
+				giveResource('food', 0, 30); 
+				giveResource('furs', 0, 8); 
+			elseif lastDeadUnit()==deer03 then
+				addConsoleText('deer')
+				giveResource('food', 0, 30); 
+				giveResource('furs', 0, 8); 
+			elseif lastDeadUnit()==deer04 then
+				addConsoleText('deer')
+				giveResource('food', 0, 30); 
+				giveResource('furs', 0, 8); 
+			elseif lastDeadUnit()==deer05 then
+				addConsoleText('deer')
+				giveResource('food', 0, 30); 
+				giveResource('furs', 0, 8); 
+			elseif lastDeadUnit()==deer then
+				addConsoleText('deer')
+				giveResource('food', 0, 30); 
+				giveResource('furs', 0, 8); 
+				math.randomseed(os.time())
+				rtime = math.random(1, 3)
+				if rtime == 1 then
+					createUnit('deer', 2, {88, 438})
+					deer= lastCreatedUnit()
+					createUnit('deer', 2, {141, 452})
+					deer01= lastCreatedUnit()
+				elseif rtime == 2 then
+					createUnit('deer', 2, {60, 464})
+					deer= lastCreatedUnit()
+				elseif rtime == 3 then
+					createUnit('deer', 2, {55, 445})
+					deer= lastCreatedUnit()
+				end
+			elseif lastDeadUnit()==wolf then
+				addConsoleText('wolf')
+				giveResource('food', 0, 10); 
+				giveResource('furs', 0, 3);
+				math.randomseed(os.time())
+				rtime = math.random(1, 4)
+				if rtime == 1 then
+					createUnit('wolf', 2, {99, 433})
+					wolf= lastCreatedUnit()
+				elseif rtime == 2 then
+					createUnit('wolf', 2, {55, 445})
+					wolf= lastCreatedUnit()
+				elseif rtime == 3 then
+					createUnit('wolf', 2, {148, 458})
+					wolf= lastCreatedUnit()
+				elseif rtime == 4 then
+					createUnit('wolf', 2, {53, 461})
+					wolf= lastCreatedUnit()
+				end
+			elseif lastDeadUnit()==wolf2 then
+				addConsoleText('wolf')
+				giveResource('food', 0, 10); 
+				giveResource('furs', 0, 3);
+				math.randomseed(os.time())
+				rtime = math.random(1, 4)
+				if rtime == 1 then
+					createUnit('wolf', 2, {99, 433})
+					wolf2= lastCreatedUnit()
+				elseif rtime == 2 then
+					createUnit('wolf', 2, {153, 461})
+					wolf2= lastCreatedUnit()
+				elseif rtime == 3 then
+					createUnit('wolf', 2, {48, 188})
+					wolf2= lastCreatedUnit()
+				elseif rtime == 4 then
+					createUnit('wolf', 2, {130, 461})
+					wolf2= lastCreatedUnit()
+				end
+			elseif lastDeadUnit()==st then
+				addConsoleText('smallturtle')
+				giveResource('food', 0, 10); 
+				math.randomseed(os.time())
+				rtime = math.random(1, 2)
+				if rtime == 1 then
+					createUnit('small_turtle', 2, {106, 484})
+					st= lastCreatedUnit()
+				elseif rtime == 2 then
+					createUnit('small_turtle', 2, {52, 482})
+					st= lastCreatedUnit()
+				end
+			elseif lastDeadUnit()==lt then
+				addConsoleText('largeturtle')
+				giveResource('food', 0, 18); 
+				math.randomseed(os.time())
+				rtime = math.random(1, 2)
+				if rtime == 1 then
+					createUnit('large_turtle', 2, {82, 489})
+					lt= lastCreatedUnit()
+				elseif rtime == 2 then
+					createUnit('large_turtle', 2, {45, 452})
+					lt= lastCreatedUnit()
+				end
+			elseif lastDeadUnit()==defence then
+				defence=house
+			elseif lastDeadUnit()==defence2 then
+				defence2=house
+			elseif lastDeadUnit()==stonetower then
+				stonetower=house
+			elseif lastDeadUnit()==house then
+				house=you
+				defence=you
+				defence2=you
+				stonetower=you
+				is_attacking_you=true
+			end
+
+			for k,v in pairs(af_players) do
+				if lastDeadUnit() == v then
+					addConsoleText('articwolf')
+					giveResource('food', 0, 10); 
+					giveResource('furs', 0, 3); 
+					math.randomseed(os.time())
+					rtime = math.random(1, 4)
+					if rtime == 1 then
+						createUnit('arctic_fox', 2, {108, 71})
+						af_count=af_count+1
+						af_players[af_count]= lastCreatedUnit()
+					elseif rtime == 2 then
+						createUnit('arctic_fox', 2, {30, 93})
+						af_count=af_count+1
+						af_players[af_count]= lastCreatedUnit()
+					elseif rtime == 3 then
+						createUnit('arctic_fox', 2, {102, 103})
+						af_count=af_count+1
+						af_players[af_count]= lastCreatedUnit()
+					elseif rtime == 4 then
+						createUnit('arctic_fox', 2, {43, 73})
+						af_count=af_count+1
+						af_players[af_count]= lastCreatedUnit()
+						createUnit('arctic_fox', 2, {120, 28})
+						af_count=af_count+1
+						af_players[af_count]= lastCreatedUnit()
+					end
+				end
+			end
+			
+			for k,v in pairs(kiwi_players) do
+				if lastDeadUnit() == v then
+					addConsoleText('kiwi')
+					giveResource('food', 0, 8); 
+					math.randomseed(os.time())
+					rtime = math.random(1, 4)
+					if rtime == 1 then
+						createUnit('kiwi', 2, {81, 435})
+						kiwi_count=kiwi_count+1						
+						kiwi_players[kiwi_count] = lastCreatedUnit()
+					elseif rtime == 2 then
+						createUnit('kiwi', 2, {86, 467})
+						kiwi_count=kiwi_count+1						
+						kiwi_players[kiwi_count] = lastCreatedUnit()
+					elseif rtime == 3 then
+						createUnit('kiwi', 2, {66, 476})
+						kiwi_count=kiwi_count+1						
+						kiwi_players[kiwi_count] = lastCreatedUnit()
+					elseif rtime == 4 then
+						createUnit('kiwi', 2, {100, 442})
+						kiwi_count=kiwi_count+1						
+						kiwi_players[kiwi_count] = lastCreatedUnit()
+					end
+				end
+			end
+
+			for k,v in pairs(crab_players) do
+				if lastDeadUnit() == v then
+					addConsoleText('crab')
+					giveResource('food', 0, 6); 
+					math.randomseed(os.time())
+					rtime = math.random(1, 12)
+					if rtime == 1 then
+						createUnit('crab', 2, {52, 483})
+						crab_count=crab_count+1
+						crab_players[crab_count]= lastCreatedUnit()
+					elseif rtime == 2 then
+						createUnit('crab', 2, {82, 490})
+						crab_count=crab_count+1
+						crab_players[crab_count]= lastCreatedUnit()
+					elseif rtime == 3 then
+						createUnit('crab', 2, {64, 484})
+						crab_count=crab_count+1
+						crab_players[crab_count]= lastCreatedUnit()
+					elseif rtime == 4 then
+						createUnit('crab', 2, {96, 486})
+						crab_count=crab_count+1
+						crab_players[crab_count]= lastCreatedUnit()
+					elseif rtime == 5 then
+						createUnit('crab', 2, {115, 487})
+						crab_count=crab_count+1
+						crab_players[crab_count]= lastCreatedUnit()
+					elseif rtime == 6 then
+						createUnit('crab', 2, {103, 487})
+						crab_count=crab_count+1
+						crab_players[crab_count]= lastCreatedUnit()
+					elseif rtime == 7 then
+						createUnit('crab', 2, {103, 487})
+						crab_count=crab_count+1
+						crab_players[crab_count]= lastCreatedUnit()
+					elseif rtime == 8 then
+						createUnit('crab', 2, {96, 486})
+						crab_count=crab_count+1
+						crab_players[crab_count]= lastCreatedUnit()
+					elseif rtime == 9 then
+						createUnit('crab', 2, {53, 483})
+						crab_count=crab_count+1
+						crab_players[crab_count]= lastCreatedUnit()
+					elseif rtime == 10 then
+						createUnit('crab', 2, {45, 474})
+						crab_count=crab_count+1
+						crab_players[crab_count]= lastCreatedUnit()
+					elseif rtime == 11 then
+						createUnit('crab', 2, {69, 489})
+						crab_count=crab_count+1
+						crab_players[crab_count]= lastCreatedUnit()
+					elseif rtime == 12 then
+						createUnit('crab', 2, {84, 491})
+						crab_count=crab_count+1
+						crab_players[crab_count]= lastCreatedUnit()
+					end
+				end
+			end
+		</unitDied>		
+	</scripts>		
+</scenario>

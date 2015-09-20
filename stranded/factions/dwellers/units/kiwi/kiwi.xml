@@ -1,0 +1,109 @@
+<?xml version="1.0" standalone="no"?>
+
+<unit>
+
+	<!-- *** parameters *** -->
+
+	<parameters>
+		<size value="1"/>
+		<height value="2"/>
+		<max-hp value="350" regeneration="1"/>
+		<max-ep value="0"/>
+		<armor value="8"/>
+		<armor-type value="organic"/>					
+		<sight value="9"/>
+		<time value="0"/>	
+		<multi-selection value="true"/>	
+		<cellmap value="false"/>
+		<levels/>
+		<fields>
+			<field value="land"/>
+		</fields>	
+		<properties/>
+		<light enabled="false"/>
+		<unit-requirements/>
+		<upgrade-requirements/>
+		<resource-requirements>		
+		</resource-requirements>
+		<resources-stored/>
+		<image path="images/jako.bmp"/>
+		<image-cancel path="../tech_cancel.bmp"/>
+		<meeting-point value="false"/>
+		<selection-sounds enabled="false">					
+		</selection-sounds>
+		<command-sounds enabled="false">				
+		</command-sounds>
+	</parameters>
+
+
+	<!-- *** skills *** -->
+
+	<skills>
+	
+		<skill>
+			<type value="stop"/>
+			<name value="stop_skill"/>		
+			<ep-cost value="0"/>
+			<speed value="1000"/>
+			<anim-speed value="55"/>
+			<animation path="models/kiwi_stand.g3d"/>
+			<animation path="models/kiwi_stand2.g3d"/>
+			<animation path="models/kiwi_stand3.g3d"/>
+			<animation path="models/kiwi_stand4.g3d"/>
+			<animation path="models/kiwi_stand5.g3d"/>
+			<animation path="models/kiwi_stand6.g3d"/>
+			<animation path="models/kiwi_stand7.g3d"/>
+			<animation path="models/kiwi_stand8.g3d"/>
+			<animation path="models/kiwi_stand9.g3d"/>
+			<animation path="models/kiwi_stand10.g3d"/>
+			<sound enabled="false"/>
+		</skill>
+
+		<skill>
+			<type value="move"/>
+			<name value="move_skill"/>		
+			<ep-cost value="0"/>
+			<speed value="100"/>
+			<anim-speed value="180"/>
+			<animation path="models/kiwi_walk.g3d"/>
+			<sound enabled="false"/>
+		</skill>		
+		
+		<skill>
+			<type value="die"/>
+			<name value="die_skill"/>		
+			<ep-cost value="0"/>
+			<speed value="90"/>
+			<anim-speed value="90"/>
+			<animation path="models/kiwi_die.g3d"/>
+			<sound enabled="true" start-time="0">
+				<sound-file path="sounds/die1.wav"/>					
+			</sound>			
+			<fade value="false"/>
+		</skill>						
+
+	</skills>
+
+	<!-- *** commands *** -->
+	
+	<commands>
+		
+		<command>
+			<type value= "stop"/>
+			<name value="stop"/>
+			<image path="../tech_stop.bmp"/>
+			<unit-requirements/>
+			<upgrade-requirements/>
+			<stop-skill value="stop_skill"/>
+		</command>
+
+		<command>
+			<type value= "move"/>
+			<name value="move"/>
+			<image path="../tech_move.bmp"/>
+			<unit-requirements/>
+			<upgrade-requirements/>
+			<move-skill value="move_skill"/>
+		</command>
+	</commands>
+</unit>
