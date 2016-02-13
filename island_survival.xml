@@ -65,18 +65,6 @@
 			showMessage('m5', 'game')
 			setDisplayText('ob1')
 			objective='objective_find_water'
-			
-			--for testing purposes only
-			
-				--showMessage('m3p9', 'you')
-				--showMessage('m3p10', 'you')
-				--setDisplayText('ob23')
-				--objective='objective_explore1'
-				--createUnitNoSpacing('trigger', 2, {55, 284})
-				--dog= lastCreatedUnit()
-				--cell_event_dog = registerCellTriggerEventForUnitToUnit(you,dog)
-				
-			--end of clause
 		</startup>
 
 		<unitTriggerEvent>
@@ -592,12 +580,12 @@
 				monsters3=true
 				showMessage('m3p3', 'you')
 				setDisplayText('ob17')
-				objective='objective_wooden_walls'
+				objective='objective_wooden_fences'
 			end
 		</unitCreatedOfType>
 
 		<unitCreatedOfType type="wooden_fence">
-			if objective=='objective_wooden_walls' and unitCountOfType(0, 'wooden_fence') &gt;= 5 then
+			if objective=='objective_wooden_fences' and unitCountOfType(0, 'wooden_fence') &gt;= 5 then
 				showMessage('m3p4', 'you')
 				setDisplayText('ob18')
 				objective='objective_wooden_gate'
@@ -726,10 +714,10 @@
 				unregisterCellTriggerEvent(cell_event_7)
 				createUnit('broken_tent', 1, {450, 260})
 				createUnit('dead_skeleton', 1, {447, 263})
-				createUnitNoSpacing('wooden_wall', 1, {452, 265})
-				createUnitNoSpacing('wooden_wall', 1, {450, 265})
-				createUnitNoSpacing('wooden_wall', 1, {448, 265})
-				createUnitNoSpacing('broken_wooden_wall', 1, {446, 265})
+				createUnitNoSpacing('wooden_fence', 1, {452, 265})
+				createUnitNoSpacing('wooden_fence', 1, {450, 265})
+				createUnitNoSpacing('wooden_fence', 1, {448, 265})
+				createUnitNoSpacing('broken_wooden_fence', 1, {446, 265})
 				showMessage('m4p6', 'you')
 				showMessage('m4p7', 'you')
 				setDisplayText('ob27')

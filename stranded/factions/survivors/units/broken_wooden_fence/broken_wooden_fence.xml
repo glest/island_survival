@@ -48,7 +48,7 @@
 			<ep-cost value="0" />
 			<speed value="300" />
 			<anim-speed value="100" />
-			<animation path="models/woodwalldie.g3d" />
+			<animation path="models/broken_wooden_fence.g3d" />
 			<sound enabled="false" />
 		</skill>		
 		
@@ -58,7 +58,7 @@
 			<ep-cost value="0" />
 			<speed value="300" />
 			<anim-speed value="300" />
-			<animation path="models/woodwalldie.g3d" />
+			<animation path="models/broken_wooden_fence.g3d" />
 			<particles value="true">
 			</particles>
 			<sound enabled="true" start-time="0">
