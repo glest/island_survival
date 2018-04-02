@@ -1,5 +1,5 @@
-# island_survival
-An alpha version of the island_survival scenario of the game MegaGlest.
+# Island Survival
+An alpha version of the island_survival scenario of the game ZetaGlest.
 
 The scenario is still in development. Its story is not yet complete by any means.
 
