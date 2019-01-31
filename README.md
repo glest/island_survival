@@ -1,11 +1,11 @@
 # Island Survival
-An alpha version of the Island Survival scenario of the game ZetaGlest.
+An alpha version of the Island Survival scenario for the game Glest.
 
 The scenario is still in development. Its story is not yet complete by any means.
 
 Credits to:
 
--The MegaGlest team for their development of the awesome MegaGlest game
+-The Glest team for their development of the awesome Glest game
 
 -[titiger](https://github.com/titiger), who took the initative to develop such a tediously long scenario and developed almost all of the units in this scenario
 
