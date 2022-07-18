@@ -1,3 +1,12 @@
+
+========================================================================================
+
+ARCHIVED
+========
+This project is no longer maintained. If you would like to contact about this, please find us on **[Discord](https://discord.gg/es3EyBB)**.
+
+========================================================================================
+
 # Island Survival
 An alpha version of the Island Survival scenario for the game Glest.
 
